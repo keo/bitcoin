@@ -1,5 +1,5 @@
 ---
-name: "bitcoin-win-0.12"
+name: "bitcoinclassic-win-0.12"
 enable_cache: true
 suites:
 - "trusty"
@@ -23,7 +23,7 @@ packages:
 reference_datetime: "2016-01-01 00:00:00"
 remotes:
 - "url": "https://github.com/bitcoinclassic/bitcoinclassic.git"
-  "dir": "bitcoin"
+  "dir": "bitcoinclassic"
 files: []
 script: |
   WRAP_DIR=$HOME/wrapped
@@ -91,7 +91,7 @@ script: |
 
   export PATH=${WRAP_DIR}:${PATH}
 
-  cd bitcoin
+  cd bitcoinclassic
   BASEPREFIX=`pwd`/depends
   # Build dependencies for each host
   for i in $HOSTS; do
@@ -102,14 +102,14 @@ script: |
   ./autogen.sh
   ./configure --prefix=${BASEPREFIX}/`echo "${HOSTS}" | awk '{print $1;}'`
   make dist
-  SOURCEDIST=`echo bitcoin-*.tar.gz`
+  SOURCEDIST=`echo bitcoinclassic-*.tar.gz`
   DISTNAME=`echo ${SOURCEDIST} | sed 's/.tar.*//'`
 
   # Correct tar file order
   mkdir -p temp
   pushd temp
   tar xf ../$SOURCEDIST
-  find bitcoin-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
+  find bitcoinclassic-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
   mkdir -p $OUTDIR/src
   cp ../$SOURCEDIST $OUTDIR/src
   popd
@@ -129,7 +129,7 @@ script: |
     make ${MAKEOPTS} -C src check-security
     make deploy
     make install-strip
-    cp -f bitcoin-*setup*.exe $OUTDIR/
+    cp -f bitcoinclassic-*setup*.exe $OUTDIR/
     cd installed
     mv ${DISTNAME}/bin/*.dll ${DISTNAME}/lib/
     find . -name "lib*.la" -delete

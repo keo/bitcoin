@@ -1,5 +1,5 @@
 ---
-name: "bitcoin-dmg-signer"
+name: "bitcoinclassic-dmg-signer"
 suites:
 - "trusty"
 architectures:
@@ -11,7 +11,7 @@ remotes:
 - "url": "https://github.com/bitcoinclassic/bitcoinclassic-detached-sigs.git"
   "dir": "signature"
 files:
-- "bitcoin-osx-unsigned.tar.gz"
+- "bitcoinclassic-osx-unsigned.tar.gz"
 script: |
   WRAP_DIR=$HOME/wrapped
   mkdir -p ${WRAP_DIR}
@@ -28,8 +28,8 @@ script: |
     chmod +x ${WRAP_DIR}/${prog}
   done
 
-  UNSIGNED=bitcoin-osx-unsigned.tar.gz
-  SIGNED=bitcoin-osx-signed.dmg
+  UNSIGNED=bitcoinclassic-osx-unsigned.tar.gz
+  SIGNED=bitcoinclassic-osx-signed.dmg
 
   tar -xf ${UNSIGNED}
   ./detached-sig-apply.sh ${UNSIGNED} signature/osx
